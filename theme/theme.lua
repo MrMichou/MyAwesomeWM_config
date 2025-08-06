@@ -170,10 +170,10 @@ theme.wibar_position = "bottom"
 theme.wibar_border_color = theme.focus
 theme.wibar_border_width = theme.border_width
 theme.wibar_margins = {
-    top = dpi(8),
-    left = dpi(12),
-    right = dpi(12),
-    bottom = dpi(-8)
+	top = dpi(8),
+	left = dpi(12),
+	right = dpi(12),
+	bottom = dpi(-8),
 }
 theme.wibar_shape = helpers.rrect(theme.client_border_radius)
 
@@ -221,11 +221,14 @@ naughty.config.defaults.ontop = true
 naughty.config.defaults.title = "Generic Notification"
 
 naughty.config.icon_dirs = {
-    HOME .. "/.local/share/icons/Kuyen-icons/apps/48/", HOME .. "/.local/share/icons/Kuyen-icons/",
-    "/usr/share/icons/Papirus-Dark/", "/usr/share/icons/Suru++-Asprómauros/",
-    "/usr/share/icons/breeze-dark/", "/usr/share/pixmaps/"
+	HOME .. "/.local/share/icons/Kuyen-icons/apps/48/",
+	HOME .. "/.local/share/icons/Kuyen-icons/",
+	"/usr/share/icons/Papirus-Dark/",
+	"/usr/share/icons/Suru++-Asprómauros/",
+	"/usr/share/icons/breeze-dark/",
+	"/usr/share/pixmaps/",
 }
-naughty.config.icon_formats = {"png", "svg", "jpg", "jpeg", "gif", "webp", ""}
+naughty.config.icon_formats = { "png", "svg", "jpg", "jpeg", "gif", "webp", "" }
 
 theme.notification_spacing = 12
 theme.notification_border_radius = theme.border_radius / 2
@@ -248,8 +251,8 @@ theme.bg_systray = theme.wibar_bg
 --- Bling ---
 -------------
 -- Playerctl
-theme.playerctl_ignore = {"qutebrowser", "chromium", "brave"}
-theme.playerctl_player = {"youtube-music", "spotify", "mpd", "%any"}
+-- theme.playerctl_ignore = {"qutebrowser", "chromium", "brave"}
+theme.playerctl_player = { "brave", "youtube-music", "spotify", "mpd", "%any" }
 theme.playerctl_update_on_activity = true
 theme.playerctl_position_update_interval = 1
 

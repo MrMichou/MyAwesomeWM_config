@@ -18,77 +18,73 @@ local last_minute
 local active_color
 
 local function update_time()
-    local hour, min = os.date("%H:%M"):match("(%d+):(%d+)")
-    local hour = tonumber(hour)
-    local min = tonumber(min)
+	local hour, min = os.date("%H:%M"):match("(%d+):(%d+)")
+	local hour = tonumber(hour)
+	local min = tonumber(min)
 
-    -- update only if time has changed
-    if last_hour == hour and last_minute == min then
-        return
-    end
+	-- update only if time has changed
+	if last_hour == hour and last_minute == min then
+		return
+	end
 
-    active_color = color_helpers.get_color_by_time_of_day(hour)
-    lockscreen_body:get_children_by_id("container")[1].border_color = active_color
-    wordclock.update_clock(hour, min, active_color)
+	active_color = color_helpers.get_color_by_time_of_day(hour)
+	lockscreen_body:get_children_by_id("container")[1].border_color = active_color
+	wordclock.update_clock(hour, min, active_color)
 
-    last_hour = hour
-    last_minute = min
+	last_hour = hour
+	last_minute = min
 end
 
-local clock_timer = gtimer {
-    timeout = 2,
-    call_now = false,
-    callback = update_time
-}
+local clock_timer = gtimer({
+	timeout = 2,
+	call_now = false,
+	callback = update_time,
+})
 
 -- Add lockscreen to each screen
-awful.screen.connect_for_each_screen(
-    function(s)
-        s.lockscreen = wibox {
-            widget = {
-                {
-                    lockscreen_body,
-                    {
-                        power_buttons,
-                        weather_box,
-                        media_controls_box,
+awful.screen.connect_for_each_screen(function(s)
+	s.lockscreen = wibox({
+		widget = {
+			{
+				lockscreen_body,
+				{
+					-- power_buttons,
+					-- weather_box,
+					-- media_controls_box,
 
-                        spacing = dpi(12),
-                        layout = wibox.layout.fixed.vertical
-                    },
-                    spacing = dpi(12),
-                    layout = wibox.layout.fixed.horizontal
-                },
-                widget = wibox.container.place
-            },
-            visible = false,
-            ontop = true,
-            type = "splash",
-            screen = s,
-            bg = beautiful.black .. "A0"
-        }
-    end
-)
+					spacing = dpi(12),
+					layout = wibox.layout.fixed.vertical,
+				},
+				spacing = dpi(12),
+				layout = wibox.layout.fixed.horizontal,
+			},
+			widget = wibox.container.place,
+		},
+		visible = false,
+		ontop = true,
+		type = "splash",
+		screen = s,
+		-- bg = beautiful.black .. "FF",
+		-- bg = beautiful.black .. "A0",
+		bg = "00",
+	})
+end)
 
-awesome.connect_signal(
-    "lockscreen::visible", function(visible)
-        if visible then
-            grab_password()
-            update_time()
-            clock_timer:start()
-        else
-            clock_timer:stop()
-        end
+awesome.connect_signal("lockscreen::visible", function(visible)
+	if visible then
+		grab_password()
+		update_time()
+		clock_timer:start()
+	else
+		clock_timer:stop()
+	end
 
-        naughty.suspended = visible
-        for s in screen do
-            s.lockscreen.visible = visible
-        end
-    end
-)
+	naughty.suspended = visible
+	for s in screen do
+		s.lockscreen.visible = visible
+	end
+end)
 
-screen.connect_signal(
-    "request::wallpaper", function(s)
-        awful.placement.maximize(s.lockscreen)
-    end
-)
+screen.connect_signal("request::wallpaper", function(s)
+	awful.placement.maximize(s.lockscreen)
+end)
