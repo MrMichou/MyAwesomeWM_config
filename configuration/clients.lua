@@ -38,11 +38,15 @@ local function reduce_topbar_margins(tag)
     end
 
     if has_maximized then
-        tag.screen.bar.margins.top = 0
-        tag.screen.bar.margins.bottom = 0
+        if tag.screen.bar then
+            tag.screen.bar.margins.top = 0
+            tag.screen.bar.margins.bottom = 0
+        end
     else
-        tag.screen.bar.margins.top = 8
-        tag.screen.bar.margins.bottom = -8
+        if tag.screen.bar then
+            tag.screen.bar.margins.top = 8
+            tag.screen.bar.margins.bottom = -8
+        end
     end
 end
 

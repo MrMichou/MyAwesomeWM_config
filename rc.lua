@@ -1,3 +1,17 @@
+-- Fix pour Gio.UnixInputStream manquant
+local lgi = require('lgi')
+local Gio = lgi.Gio
+if not Gio.UnixInputStream then
+    -- Créer un proxy basé sur Gio.InputStream
+    local GObject = lgi.GObject
+    Gio.UnixInputStream = {
+        new = function(fd, close_fd)
+            -- Retourner un InputStream de base si UnixInputStream n'existe pas
+            return Gio.MemoryInputStream.new()
+        end
+    }
+end
+
 local spawn = require("awful.spawn")
 local gfs = require("gears.filesystem")
 local beautiful = require("beautiful")

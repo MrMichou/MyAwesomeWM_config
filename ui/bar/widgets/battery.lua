@@ -12,7 +12,7 @@ local system_controls = require("helpers.system_controls")
 local text_icon = require("ui.widgets.text-icon")
 
 local is_charging = false
-local last_value = 50
+local last_value = 0
 local low_value = 20
 local critical_value = 11
 
@@ -78,8 +78,11 @@ end
 
 awesome.connect_signal(
     "signal::battery", function(value)
+        if not value then return end
+
         battery_bar.value = value
         last_value = value
+        percentage.text = tostring(value) .. "%"
 
         local color = beautiful.green
 
@@ -99,6 +102,17 @@ awesome.connect_signal(
             battery_bar.color = color .. "70"
             battery_bar.background_color = color .. "10"
             battery_bar.border_color = color
+        end
+    end
+)
+
+-- Initialiser avec la valeur réelle
+require("awful.spawn").easy_async_with_shell(
+    "cat /sys/class/power_supply/BAT0/capacity",
+    function(stdout)
+        local value = tonumber(stdout)
+        if value then
+            awesome.emit_signal("signal::battery", value)
         end
     end
 )

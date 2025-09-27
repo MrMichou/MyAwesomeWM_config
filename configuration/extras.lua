@@ -2,7 +2,7 @@ local autofocus = require("awful.autofocus")
 local awful = require("awful")
 local beautiful = require("beautiful")
 
-local better_resize = require("module.better-resize")
+-- local better_resize = require("module.better-resize")
 local task_preview = require("module.bling.widget.task_preview")
 local tag_preview = require("module.bling.widget.tag_preview")
 local window_switcher = require("module.bling.widget.window_switcher")
