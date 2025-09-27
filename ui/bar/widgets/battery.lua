@@ -11,6 +11,9 @@ local system_controls = require("helpers.system_controls")
 
 local text_icon = require("ui.widgets.text-icon")
 
+-- Ensure dpi function is available
+local dpi = beautiful.xresources.apply_dpi
+
 local is_charging = false
 local last_value = 0
 local low_value = 20
@@ -106,18 +109,50 @@ awesome.connect_signal(
     end
 )
 
--- Initialiser avec la valeur réelle
-require("awful.spawn").easy_async_with_shell(
-    "cat /sys/class/power_supply/BAT0/capacity",
-    function(stdout)
-        local value = tonumber(stdout)
-        if value then
-            awesome.emit_signal("signal::battery", value)
-        end
-    end
-)
+-- Timer sera créé dans la fonction widget
 
 local function battery(is_vertical_screen)
+    -- Timer de mise à jour DANS le widget pour s'assurer que les variables existent
+    local gtimer = require("gears.timer")
+    local spawn = require("awful.spawn")
+
+    local function read_battery()
+        local file = io.open("/sys/class/power_supply/BAT0/capacity", "r")
+        if file then
+            local content = file:read("*a")
+            file:close()
+            if content then
+                local clean_content = content:gsub("\n", ""):gsub("%s+", "")
+                local value = tonumber(clean_content)
+                if value and value >= 0 and value <= 100 then
+                    -- Mise à jour directe du widget
+                    battery_bar.value = value
+                    percentage.text = tostring(value) .. "%"
+
+                    local color = beautiful.green
+                    if value <= critical_value then
+                        color = beautiful.red
+                    elseif value <= low_value then
+                        color = beautiful.yellow
+                    end
+
+                    battery_bar.color = color .. "70"
+                    battery_bar.background_color = color .. "10"
+                    battery_bar.border_color = color
+                    positive_connection.bg = color
+                end
+            end
+        end
+    end
+
+    -- Lecture immédiate et timer
+    read_battery()
+    gtimer {
+        timeout = 10,
+        autostart = true,
+        callback = read_battery
+    }
+
     local battery_body = {
         {
             battery_bar,

@@ -10,12 +10,14 @@ local function emit_battery_state(battery_file)
 end
 
 spawn.easy_async_with_shell(
-    "echo /sys/class/power_supply/BAT?/status | head -1 || false",
+    "ls /sys/class/power_supply/BAT*/status 2>/dev/null | head -1 || false",
         function(battery_file, _, __, exit_code)
             -- No battery status found
             if exit_code ~= 0 then
                 return
             end
+
+            battery_file = battery_file:gsub("\n", "")  -- Remove newline
 
             -- Check actual state
             emit_battery_state(battery_file)
@@ -32,12 +34,14 @@ spawn.easy_async_with_shell(
 )
 
 spawn.easy_async_with_shell(
-    "echo /sys/class/power_supply/BAT?/capacity | head -1 || false",
+    "ls /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1 || false",
         function(battery_file, _, __, exit_code)
             -- No battery capacity found
             if exit_code ~= 0 then
                 return
             end
+
+            battery_file = battery_file:gsub("\n", "")  -- Remove newline
 
             -- Periodically get battery info
             local timer = gtimer {

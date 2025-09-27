@@ -39,9 +39,9 @@ beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")
 require("bindings")
 require("configuration")
 
--- Import UI + Signals
-require("ui")
+-- Import Signals + UI (signals first to be ready when widgets load)
 require("signals")
+require("ui")
 
 -- Garbage Collector Settings
 collectgarbage("setpause", 110)
