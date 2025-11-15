@@ -59,7 +59,7 @@ awful.keyboard.append_global_keybindings({
 		group = "awesome",
 	}),
 	awful.key({ modkey }, "l", function()
-		awesome.emit_signal("lockscreen::visible", true)
+		awful.spawn("i3lock -c 000000")
 	end, {
 		description = "Lock screen",
 		group = "awesome",

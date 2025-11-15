@@ -41,30 +41,39 @@ return function(args)
         end
     }
 
+    local is_running = false
+
     local function callback()
+        -- Prevent overlapping commands that would leak pipes
+        if is_running then
+            return
+        end
+        is_running = true
+
         spawn.easy_async_with_shell(
             args.watch_command, function(stdout)
                 local value, text = args.format_info(stdout)
                 slide.target = value
                 information.markup = text
+                is_running = false
             end
         )
     end
 
     local timer = gtimer {
         timeout = args.interval or 1,
-        call_now = true,
+        call_now = false,
+        autostart = false,
         callback = callback
     }
 
     awesome.connect_signal(
         "control_center::monitor_mode", function(monitor_mode)
+            timer:stop()
             if monitor_mode then
                 -- run callback immediately then periodically
                 callback()
                 timer:start()
-            else
-                timer:stop()
             end
         end
     )

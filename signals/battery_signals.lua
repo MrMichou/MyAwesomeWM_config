@@ -44,13 +44,20 @@ spawn.easy_async_with_shell(
             battery_file = battery_file:gsub("\n", "")  -- Remove newline
 
             -- Periodically get battery info
+            local is_running = false
             local timer = gtimer {
                 timeout = 40,
                 call_now = true,
                 callback = function()
+                    if is_running then
+                        return
+                    end
+                    is_running = true
+
                     spawn.easy_async_with_shell(
                         "cat " .. battery_file, function(stdout)
                             awesome.emit_signal("signal::battery", tonumber(stdout))
+                            is_running = false
                         end
                     )
                 end

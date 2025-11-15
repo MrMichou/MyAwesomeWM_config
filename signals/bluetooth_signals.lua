@@ -1,10 +1,18 @@
 local spawn = require("awful.spawn")
 local gtimer = require("gears.timer")
 
+local is_running = false
+
 local function emit_devices_signal()
+    if is_running then
+        return
+    end
+    is_running = true
+
     spawn.easy_async_with_shell(
         [[bash -c 'bluetoothctl devices Connected | cut -d" " -f3-']], function(stdout)
             if stdout == "" then
+                is_running = false
                 return
             end
 
@@ -14,6 +22,7 @@ local function emit_devices_signal()
             end
 
             awesome.emit_signal("bluetooth::devices", table.concat(devices, ", "))
+            is_running = false
         end
     )
 end

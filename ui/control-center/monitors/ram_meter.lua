@@ -24,6 +24,12 @@ local function format_info(stdout)
         stdout:match(
             "(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)"
         )
+
+    if not total or not used then
+        return 0, "- / -"
+    end
+
+    total, used = tonumber(total), tonumber(used)
     local value = used / total * 100
     local info = string.format("%.2f / %.2f GB", used / 1048576, total / 1048576)
     return value, info

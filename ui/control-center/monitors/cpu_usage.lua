@@ -14,8 +14,16 @@ local idle_prev = 0
 
 local function format_info(stdout)
     local user, nice, system, idle, iowait, irq, softirq, steal, guest, guest_nice = stdout:match(
-        "(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s(%d+)%s"
+        "(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)"
     )
+
+    if not user then
+        return 0, "0.00 %"
+    end
+
+    user, nice, system, idle, iowait, irq, softirq, steal =
+        tonumber(user), tonumber(nice), tonumber(system), tonumber(idle),
+        tonumber(iowait), tonumber(irq), tonumber(softirq), tonumber(steal)
 
     local total = user + nice + system + idle + iowait + irq + softirq + steal
 

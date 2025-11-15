@@ -9,7 +9,11 @@ local meter_icon = text_icon {
 }
 
 local function format_info(stdout)
-    local temp = stdout:match("%d+") / 1000
+    local temp_raw = stdout:match("%d+")
+    if not temp_raw then
+        return 0, "0.0 °"
+    end
+    local temp = tonumber(temp_raw) / 1000
     return temp, string.format("%.1f °", temp)
 end
 
