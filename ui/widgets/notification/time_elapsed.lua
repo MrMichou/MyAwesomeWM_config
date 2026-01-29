@@ -24,8 +24,14 @@ return function(time_of_notification, exact_time, exact_date)
         call_now = true,
         autostart = true,
         callback = function()
-            local time_difference = (time_in_seconds(os.date("%H:%M:%S")) -
-                                        time_in_seconds(time_of_notification))
+            local current_time = time_in_seconds(os.date("%H:%M:%S"))
+            local notif_time = time_in_seconds(time_of_notification)
+
+            if current_time == nil or notif_time == nil then
+                return
+            end
+
+            local time_difference = current_time - notif_time
 
             if time_difference >= 60 and time_difference < 3600 then
                 local time_in_minutes = math.floor(time_difference / 60)

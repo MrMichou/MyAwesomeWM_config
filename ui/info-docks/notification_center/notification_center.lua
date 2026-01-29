@@ -5,6 +5,7 @@ local border_popup = require("ui.widgets.border-popup")
 
 local notification_list = require("ui.info-docks.notification_center.notification_list")
 local clear_all = require("ui.info-docks.notification_center.clear_all")
+local suspend = require("ui.info-docks.notification_center.suspend")
 
 local header = wibox.widget {
     {
@@ -16,7 +17,12 @@ local header = wibox.widget {
         widget = wibox.widget.textbox
     },
     nil,
-    clear_all,
+    {
+        suspend,
+        clear_all,
+        spacing = dpi(4),
+        layout = wibox.layout.fixed.horizontal
+    },
     layout = wibox.layout.align.horizontal
 }
 
