@@ -29,6 +29,10 @@ require("configuration")
 require("signals")
 require("ui")
 
+-- Optional Claude Code desktop crab pet (walks the screen edge while Claude works).
+-- pcall-guarded so a pet error can never bring down the WM session.
+pcall(require, "ui.bar.widgets.claude_status.crab")
+
 -- Garbage Collector Settings (optimized for performance)
 collectgarbage("setpause", 160)
 collectgarbage("setstepmul", 400)

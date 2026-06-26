@@ -14,6 +14,7 @@ local client_info = require("ui.bar.widgets.client_info")
 local device_indicators = require("ui.bar.widgets.device_indicators")
 local systray = require("ui.bar.widgets.systray")
 local battery = require("ui.bar.widgets.battery")
+local claude_status = require("ui.bar.widgets.claude_status")
 
 local function top_bar(s)
     local is_vertical = s.geometry.height > s.geometry.width
@@ -47,6 +48,7 @@ local function top_bar(s)
                 {
                     mediabar(s.geometry.width, is_vertical),
                     device_indicators,
+                    claude_status,
                     systray,
                     battery(is_vertical),
                     notifications_and_datetime(is_vertical),

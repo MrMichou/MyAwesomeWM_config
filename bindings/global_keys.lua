@@ -96,6 +96,12 @@ awful.keyboard.append_global_keybindings({
 		description = "Window switcher",
 		group = "awesome",
 	}),
+	awful.key({ modkey }, "z", function()
+		require("ui.bar.widgets.claude_status").toggle_sessions_menu()
+	end, {
+		description = "Toggle Claude sessions menu",
+		group = "awesome",
+	}),
 })
 
 -- Client Bindings

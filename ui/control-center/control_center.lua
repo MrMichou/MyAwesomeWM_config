@@ -9,6 +9,31 @@ local info_and_buttons = require("ui.control-center.top-controls.container")
 local controls = require("ui.control-center.controls.controls")
 local monitors = require("ui.control-center.monitors.monitors")
 local media_controls_popup = require("ui.control-center.media-controls-popup")
+-- Same singleton instance as the wibar — mirrors here (same animation + clicks).
+local claude_status = require("ui.bar.widgets.claude_status")
+
+-- Wrap the wibar-sized claude widget so it reads as a panel row inside the CC.
+local claude_title = wibox.widget {
+    markup = "<b>Claude</b>",
+    font = beautiful.font_name .. "Medium 10",
+    widget = wibox.widget.textbox
+}
+
+local claude_row = wibox.widget {
+    {
+        {
+            claude_title,
+            nil,
+            claude_status,
+            layout = wibox.layout.align.horizontal
+        },
+        margins = dpi(12),
+        widget = wibox.container.margin
+    },
+    bg = beautiful.black,
+    shape = helpers.rrect(beautiful.border_radius),
+    widget = wibox.container.background
+}
 
 local body_container = wibox.widget {
     {
@@ -19,6 +44,7 @@ local body_container = wibox.widget {
                 monitors,
                 layout = wibox.layout.stack
             },
+            claude_row,
             layout = wibox.layout.fixed.vertical,
             spacing = dpi(12)
         },
