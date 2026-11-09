@@ -11,6 +11,12 @@ end
 
 playerctl:connect_signal(
     "metadata", function(_, title, artist, album_path, album, new, player_name)
+        -- Browsers emit an empty title between two tracks; without this the notification
+        -- falls back to naughty's default title ("Generic Notification").
+        if not title or title == "" then
+            return
+        end
+
         if last_notification and not last_notification.is_expired then
             last_notification.icon = album_path
             last_notification.title = gstring.xml_unescape(title)
