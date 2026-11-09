@@ -1,0 +1,14 @@
+diff --git a/third_party/widget/cal.lua b/third_party/widget/cal.lua
+index 03ff4ce..c4c9fce 100644
+--- a/third_party/widget/cal.lua
++++ b/third_party/widget/cal.lua
+@@ -64,7 +64,8 @@ local function factory(args)
+         end
+         notifytable[#notifytable] = string.format("%s\n%s", notifytable[#notifytable]:sub(1, -2), string.rep(" ", st_day*4))
+         local strx
+-        for x = 1,mth_days do
++        for day_idx = 1,mth_days do
++            local x = day_idx
+             strx = x
+             if x == today then
+                 if x < 10 then x = " " .. x end

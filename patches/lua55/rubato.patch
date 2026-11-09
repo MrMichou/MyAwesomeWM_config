@@ -1,0 +1,13 @@
+diff --git a/timed.lua b/timed.lua
+index 198549d..36ed2f9 100644
+--- a/timed.lua
++++ b/timed.lua
+@@ -98,7 +98,7 @@ if not RUBATO_TIMEOUTS then RUBATO_TIMEOUTS = {{}, {}} end
+ local function create_timeout(rate, override_dt)
+ 	local time_last = glib.get_monotonic_time()
+ 	local initial_dt = 1 / rate
+-	return glib.timeout_add(glib.PRIORITY_DEFAULT, initial_dt * 1000, function()
++	return glib.timeout_add(glib.PRIORITY_DEFAULT, math.max(1, math.floor(initial_dt * 1000 + 0.5)), function()
+ 
+ 	local dt = initial_dt
+ 	if not override_dt then

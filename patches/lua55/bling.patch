@@ -1,0 +1,33 @@
+diff --git a/layout/init.lua b/layout/init.lua
+index de30ed6..a74014a 100644
+--- a/layout/init.lua
++++ b/layout/init.lua
+@@ -9,8 +9,8 @@ local function get_layout_icon_path(name)
+         :match("^.*bling"):gsub("%.", "/")
+         .. "/icons/layouts/" .. name .. ".png"
+ 
+-    for p in package.path:gmatch('([^;]+)') do
+-        p = p:gsub("?.*", "")
++    for path_entry in package.path:gmatch('([^;]+)') do
++        local p = path_entry:gsub("?.*", "")
+         local absolute_icon_path = p .. relative_icon_path
+         if gears.filesystem.file_readable(absolute_icon_path) then
+             return absolute_icon_path
+diff --git a/signal/playerctl/playerctl_lib.lua b/signal/playerctl/playerctl_lib.lua
+index ca19633..92de672 100644
+--- a/signal/playerctl/playerctl_lib.lua
++++ b/signal/playerctl/playerctl_lib.lua
+@@ -209,9 +209,10 @@ local function metadata_cb(self, player, metadata)
+     local data = metadata.value
+ 
+     local title = data["xesam:title"] or ""
+-    local artist = data["xesam:artist"][1] or ""
+-    for i = 2, #data["xesam:artist"] do
+-        artist = artist .. ", " .. data["xesam:artist"][i]
++    local artists = data["xesam:artist"] or {}
++    local artist = artists[1] or ""
++    for i = 2, #artists do
++        artist = artist .. ", " .. artists[i]
+     end
+     local artUrl = data["mpris:artUrl"] or ""
+     local album = data["xesam:album"] or ""
