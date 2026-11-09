@@ -86,4 +86,14 @@ function _controls.suspend()
     spawn("systemctl suspend")
 end
 
+-- Lock the screen: animated Claude constellation (xsecurelock) when available, plain i3lock otherwise.
+function _controls.lock()
+    local ok, constellation = pcall(require, "ui.desktop.claude_constellation")
+    if ok and type(constellation) == "table" and constellation.lock then
+        constellation.lock()
+    else
+        spawn({ "i3lock", "-c", "000000" })
+    end
+end
+
 return _controls

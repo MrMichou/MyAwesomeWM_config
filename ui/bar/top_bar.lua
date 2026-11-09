@@ -34,6 +34,20 @@ local function top_bar(s)
                 {
                     layoutbox(s),
                     client_info,
+                    {
+                        {
+                            orientation = "vertical",
+                            forced_width = dpi(1),
+                            color = beautiful.xforeground .. "40",
+                            widget = wibox.widget.separator
+                        },
+                        top = dpi(6),
+                        bottom = dpi(6),
+                        left = dpi(6),
+                        right = dpi(6),
+                        widget = wibox.container.margin
+                    },
+                    claude_status,
                     spacing = dpi(4),
                     layout = wibox.layout.fixed.horizontal
                 },
@@ -48,7 +62,6 @@ local function top_bar(s)
                 {
                     mediabar(s.geometry.width, is_vertical),
                     device_indicators,
-                    claude_status,
                     systray,
                     battery(is_vertical),
                     notifications_and_datetime(is_vertical),

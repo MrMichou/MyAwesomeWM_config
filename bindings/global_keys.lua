@@ -58,10 +58,14 @@ awful.keyboard.append_global_keybindings({
 		description = "Quit awesome",
 		group = "awesome",
 	}),
-	awful.key({ modkey }, "l", function()
-		awful.spawn("i3lock -c 000000")
-	end, {
+	awful.key({ modkey }, "l", system_controls.lock, {
 		description = "Lock screen",
+		group = "awesome",
+	}),
+	awful.key({ modkey, shift }, "l", function()
+		awful.spawn.with_shell("/home/mnicolet/bash_script/oui.sh")
+	end, {
+		description = "Lock screen (prank)",
 		group = "awesome",
 	}),
 	awful.key({}, "XF86PowerOff", function()
@@ -100,6 +104,24 @@ awful.keyboard.append_global_keybindings({
 		require("ui.bar.widgets.claude_status").toggle_sessions_menu()
 	end, {
 		description = "Toggle Claude sessions menu",
+		group = "awesome",
+	}),
+	awful.key({ modkey, shift }, "c", function()
+		local ok, cc = pcall(require, "ui.desktop.claude_constellation")
+		if ok and cc.set_layout then
+			cc.set_layout("next")
+		end
+	end, {
+		description = "Next Claude constellation layout",
+		group = "awesome",
+	}),
+	awful.key({ modkey, ctrl }, "c", function()
+		local ok, cc = pcall(require, "ui.desktop.claude_constellation")
+		if ok and cc.set_off then
+			cc.set_off("toggle")
+		end
+	end, {
+		description = "Switch Claude constellation off/on",
 		group = "awesome",
 	}),
 })
@@ -195,13 +217,13 @@ awful.keyboard.append_global_keybindings({
 		group = "launcher",
 	}), -- Screenshots
 	awful.key({}, "Print", function()
-		awful.spawn("flameshot gui")
+		awful.spawn.with_shell("$HOME/.local/bin/flameshot-gui")
 	end, {
 		description = "Take an area screenshot",
 		group = "screenshots",
 	}),
 	awful.key({ modkey, shift }, "s", function()
-		awful.spawn("flameshot gui")
+		awful.spawn.with_shell("$HOME/.local/bin/flameshot-gui")
 	end, {
 		description = "Take an area screenshot",
 		group = "screenshots",
@@ -355,6 +377,12 @@ awful.keyboard.append_global_keybindings({
 		awful.layout.set(awful.layout.suit.spiral)
 	end, {
 		description = "Set Spiral layout",
+		group = "layout",
+	}),
+	awful.key({ modkey, ctrl }, "h", function()
+		awful.layout.set(require("module.bling.layout").horizontal)
+	end, {
+		description = "Set Horizontal layout",
 		group = "layout",
 	}),
 	awful.key({ modkey, ctrl }, "f", function()

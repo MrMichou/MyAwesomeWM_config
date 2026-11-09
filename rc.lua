@@ -27,6 +27,10 @@ require("configuration")
 
 -- Import Signals + UI (signals first to be ready when widgets load)
 require("signals")
+-- Optional Claude Code "constellation" desktop layer (live sessions + resources they touch).
+-- Must load before ui: non-ontop wiboxes stack in the order they are shown, so loading it
+-- later would cover the bar and docks.
+pcall(require, "ui.desktop.claude_constellation")
 require("ui")
 
 -- Optional Claude Code desktop crab pet (walks the screen edge while Claude works).

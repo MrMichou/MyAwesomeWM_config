@@ -16,7 +16,9 @@ end
 
 -- Commands
 local function lock_command()
-    awesome.emit_signal("lockscreen::visible", true)
+    -- Release the exit screen's keygrabber first so the locker can grab the keyboard.
+    hide_exit_screen()
+    system_controls.lock()
 end
 
 local function suspend_command()

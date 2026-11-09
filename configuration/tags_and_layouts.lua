@@ -12,6 +12,7 @@ tag.connect_signal(
             bling_layout.equalarea,
             bling_layout.centered,
             bling_layout.vertical,
+            bling_layout.horizontal,
             bling_layout.mstab,
             bling_layout.deck,
             awful_layout.suit.magnifier,
