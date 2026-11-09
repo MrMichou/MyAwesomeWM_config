@@ -34,5 +34,10 @@ require("ui")
 pcall(require, "ui.bar.widgets.claude_status.crab")
 
 -- Garbage Collector Settings (optimized for performance)
-collectgarbage("setpause", 160)
-collectgarbage("setstepmul", 400)
+-- Lua 5.5 removed the "setpause"/"setstepmul" options in favour of "param".
+if not pcall(collectgarbage, "param", "pause", 160) then
+    collectgarbage("setpause", 160)
+    collectgarbage("setstepmul", 400)
+else
+    collectgarbage("param", "stepmul", 400)
+end

@@ -5,7 +5,7 @@ local playerctl = require("signals.playerctl")
 
 local function secs_to_min(secs)
     local mins = math.floor(secs / 60)
-    local remain_secs = secs % 60
+    local remain_secs = math.floor(secs % 60)
 
     return string.format("%.0f", mins) .. ":" .. string.format("%02d", remain_secs)
 end
