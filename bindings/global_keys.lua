@@ -62,12 +62,6 @@ awful.keyboard.append_global_keybindings({
 		description = "Lock screen",
 		group = "awesome",
 	}),
-	awful.key({ modkey, shift }, "l", function()
-		awful.spawn.with_shell("/home/mnicolet/bash_script/oui.sh")
-	end, {
-		description = "Lock screen (prank)",
-		group = "awesome",
-	}),
 	awful.key({}, "XF86PowerOff", function()
 		awesome.emit_signal("exit_screen::show")
 	end, {

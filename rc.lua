@@ -18,24 +18,46 @@ naughty.connect_signal(
 dpi = beautiful.xresources.apply_dpi
 
 -- Autostart programs
-spawn.with_shell(gfs.get_configuration_dir() .. "configuration/autostart.sh")
+do
+    local variables = require("configuration.variables")
+    spawn.with_shell(string.format(
+        "LATITUDE=%s LONGITUDE=%s %sconfiguration/autostart.sh",
+        variables.latitude, variables.longitude, gfs.get_configuration_dir()
+    ))
+end
 
 -- Theme + Configs
 beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")
 require("bindings")
 require("configuration")
 
+-- Load a module that may not be installed. A missing module is fine; one that is there but
+-- fails to load is reported once the session is up, instead of vanishing silently.
+local function optional(name)
+    local ok, err = pcall(require, name)
+    if ok or tostring(err):find("module '" .. name .. "' not found", 1, true) then
+        return
+    end
+    require("gears.timer").delayed_call(function()
+        naughty.notification {
+            urgency = "critical",
+            title = "Optional module failed to load: " .. name,
+            message = tostring(err)
+        }
+    end)
+end
+
 -- Import Signals + UI (signals first to be ready when widgets load)
 require("signals")
 -- Optional Claude Code "constellation" desktop layer (live sessions + resources they touch).
 -- Must load before ui: non-ontop wiboxes stack in the order they are shown, so loading it
 -- later would cover the bar and docks.
-pcall(require, "ui.desktop.claude_constellation")
+optional("ui.desktop.claude_constellation")
 require("ui")
 
 -- Optional Claude Code desktop crab pet (walks the screen edge while Claude works).
--- pcall-guarded so a pet error can never bring down the WM session.
-pcall(require, "ui.bar.widgets.claude_status.crab")
+-- Guarded so a pet error can never bring down the WM session.
+optional("ui.bar.widgets.claude_status.crab")
 
 -- Garbage Collector Settings (optimized for performance)
 -- Lua 5.5 removed the "setpause"/"setstepmul" options in favour of "param".

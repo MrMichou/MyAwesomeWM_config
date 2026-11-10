@@ -2,7 +2,7 @@ local gfs = require("gears.filesystem")
 
 local HOME = os.getenv("HOME")
 
-return {
+local variables = {
 	editor = "neovim",
 	file_manager = "nautilus",
 	terminal = "terminator",
@@ -26,3 +26,14 @@ return {
 	-- OpenWeather api key
 	-- weather_api_key = "y0ur4p1k3yc0m35h3r3"
 }
+
+-- Personal values (coordinates, API keys...) go in configuration/variables_local.lua, which is
+-- not tracked: a file returning a table whose keys override the ones above.
+local ok, overrides = pcall(dofile, gfs.get_configuration_dir() .. "configuration/variables_local.lua")
+if ok and type(overrides) == "table" then
+	for key, value in pairs(overrides) do
+		variables[key] = value
+	end
+end
+
+return variables

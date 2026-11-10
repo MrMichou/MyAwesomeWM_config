@@ -1,2 +1,3 @@
 .vscode
 .serena/
+configuration/variables_local.lua
