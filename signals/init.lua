@@ -5,8 +5,6 @@ require(... .. ".wifi_signals")
 require(... .. ".bluetooth_signals")
 require(... .. ".volume_signals")
 require(... .. ".redshift")
-require(... .. ".webcam_signals")
-require(... .. ".asusctl_signals")
 
 if variables.dominantcolors_path then
     require(... .. ".media_dominantcolors")

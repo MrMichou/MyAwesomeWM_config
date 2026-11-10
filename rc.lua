@@ -55,9 +55,6 @@ require("signals")
 optional("ui.desktop.claude_constellation")
 require("ui")
 
--- Optional Claude Code desktop crab pet (walks the screen edge while Claude works).
--- Guarded so a pet error can never bring down the WM session.
-optional("ui.bar.widgets.claude_status.crab")
 
 -- Garbage Collector Settings (optimized for performance)
 -- Lua 5.5 removed the "setpause"/"setstepmul" options in favour of "param".

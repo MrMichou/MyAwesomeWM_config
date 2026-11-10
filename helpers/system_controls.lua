@@ -1,6 +1,5 @@
 local spawn = require("awful.spawn")
 local gears_string = require("gears.string")
-local asusctl_signals = require("signals.asusctl_signals")
 
 local _controls = {}
 
@@ -63,14 +62,6 @@ end
 
 function _controls.mic_toggle(type, value)
     spawn.easy_async("pactl set-source-mute @DEFAULT_SOURCE@ toggle", _controls.emit_mic_muted)
-end
-
-function _controls.next_asusctl_profile()
-    spawn.easy_async("asusctl profile -n", asusctl_signals.emit_profile)
-end
-
-function _controls.previous_asusctl_profile()
-    spawn.easy_async("sh -c 'asusctl profile -n ; asusctl profile -n'", asusctl_signals.emit_profile)
 end
 
 -- Power Control commands

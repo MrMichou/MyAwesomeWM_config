@@ -13,10 +13,6 @@ local variables = {
 	longitude = -67.890,
 
 	-- Optional variables
-	-- Video wallpaper
-	-- videowallpaper_path = HOME .. "/Videos/cyberpunk-city-pixel.mp4",
-	-- videowallpaper_vertical_path = HOME .. "/Videos/cyberpunk-city-pixel-vertical.mp4",
-
 	-- Dominantcolors script path
 	dominantcolors_path = HOME .. "/.local/bin/dominantcolors",
 

@@ -13,7 +13,7 @@ This is a personal AwesomeWM configuration written in Lua for Linux desktop envi
 - `configuration/` - System configuration (wallpaper, tags, layouts, client rules)
 - `bindings/` - Keyboard shortcuts and mouse bindings
 - `signals/` - Background processes and data providers (battery, wifi, media, weather, etc.)
-- `ui/` - All visual components (bar, popups, lockscreen, control center)
+- `ui/` - All visual components (bar, popups, control center)
 - `helpers/` - Utility functions for animations, colors, and system controls
 - `theme/` - Color scheme and styling based on Xresources
 
@@ -24,7 +24,7 @@ The configuration uses AwesomeWM's signal system extensively. Signals must be lo
 All user-customizable settings are centralized in `configuration/variables.lua` including:
 - Applications (editor, terminal, file manager)
 - Geographic coordinates for weather/redshift
-- Optional features (video wallpaper, dominant colors, calendar integration)
+- Optional features (dominant colors, calendar integration)
 
 ## Development Commands
 
@@ -46,7 +46,7 @@ luac -p <file.lua>
 pikaur -S awesome-git acpi upower pipewire playerctl pamixer brightnessctl
 
 # Install optional dependencies
-pikaur -S mpv xwinwrap-git python-pipx gcalendar
+pikaur -S python-pipx gcalendar
 
 # Install dominant colors script for media widget
 pipx install git+https://github.com/pablonoya/dominantcolors.git
@@ -67,7 +67,6 @@ Colors are loaded from `~/.Xresources` and mapped to semantic names in `theme/th
 
 ### Optional Features
 Several features can be enabled in `configuration/variables.lua`:
-- Video wallpaper with auto-pausing
 - Weather integration (requires OpenWeather API key)
 - Google Calendar events (requires gcalendar)
 - Media controls with dominant color extraction

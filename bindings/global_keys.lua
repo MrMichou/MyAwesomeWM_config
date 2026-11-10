@@ -1,13 +1,13 @@
 local awful = require("awful")
 local naughty = require("naughty")
 
-local revelation = require("away.third_party.revelation")
+local revelation = require("module.revelation")
 
 local helpers = require("helpers")
 local system_controls = require("helpers.system_controls")
 
 local variables = require("configuration.variables")
-local asusctl_signals = require("signals.asusctl_signals")
+local keyboard_backlight = require("signals.keyboard_backlight_signals")
 local playerctl = require("signals.playerctl")
 
 local hotkeys_popup = require("ui.hotkeys_popup")
@@ -292,21 +292,13 @@ awful.keyboard.append_global_keybindings({
 	end, {
 		description = "Next media",
 		group = "special keys",
-	}), -- Asusctl
-	awful.key({}, "XF86KbdBrightnessUp", function()
-		awful.spawn.easy_async("asusctl -n", asusctl_signals.keyboard_brightness)
-	end, {
+	}), -- Keyboard backlight
+	awful.key({}, "XF86KbdBrightnessUp", keyboard_backlight.up, {
 		description = "Increase keyboard brightness",
 		group = "special keys",
 	}),
-	awful.key({}, "XF86KbdBrightnessDown", function()
-		awful.spawn.easy_async("asusctl -p", asusctl_signals.keyboard_brightness)
-	end, {
+	awful.key({}, "XF86KbdBrightnessDown", keyboard_backlight.down, {
 		description = "Decrease keyboard brightness",
-		group = "special keys",
-	}),
-	awful.key({}, "XF86Launch4", system_controls.next_asusctl_profile, {
-		description = "Next asusctl profile",
 		group = "special keys",
 	}),
 })

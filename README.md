@@ -17,7 +17,6 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
   - Regular: [Manrope](https://www.gent.media/manrope)
   - Monospace: [JetBrains Mono Slashed](https://github.com/sharpjs/JetBrainsMonoSlashed#installation)
   - Icons: [Material Symbols Rounded](https://github.com/google/material-design-icons/tree/master/variablefont) and [jetbrains-mono-nerd](https://archlinux.org/packages/community/any/ttf-jetbrains-mono-nerd/)
-- ▶ Video wallpaper [here](https://mylivewallpapers.com/sci-fi/pixel-cyberpunk-metropolis-animated-wallpaper/)
 - 📄 Rest of .dotfiles [here](https://github.com/pablonoya/dotfiles)
 
 ### ✨ Features
@@ -26,11 +25,10 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 
 - 🎨 Custom color scheme taken from [Xresources](https://github.com/pablonoya/dotfiles/blob/main/Xresources), available as vscode theme [here](https://github.com/pablonoya/seramuriana).
 - 💻🖥 Multiple screen support (vertical screen in progress).
-- 🎬 Simple animations with [Rubato](https://github.com/andOrlando/rubato) and this [picom fork](https://github.com/fdev31/picom).
+- 🎬 Simple animations with [Rubato](https://github.com/andOrlando/rubato).
 
 #### Optional features
 
-- ⏯ Auto-pausing video wallpaper.
 - 🌦 Weather popup widget.
 - 🎶 Media controls using dominant colors of from cover art.
 - 📅 Google Calendar events.
@@ -50,15 +48,14 @@ pipewire pipewire-alsa pipewire-pulse playerctl pamixer jq \
 brightnessctl networkmanager \
 
 # autostarted
-polkit-gnome blueman network-manager-applet redshift-minimal \
-picom-simpleanims-git diodon fusuma ulauncher \
+polkit-kde-agent blueman network-manager-applet redshift-minimal \
+fusuma ulauncher \
 
 # extra packages
 lxappearance-gtk3 qt5ct-kde \
-flameshot pavucontrol asusctl rog-control-center \
+flameshot pavucontrol \
 
 # for optional features
-mpv xwinwrap-git \
 python-pipx \
 gcalendar \
 
@@ -94,16 +91,6 @@ longitude = -67.890
 <summary><b>Activate the optional features</b></summary>
 
 Set corresponding parameters `configuration/variables.lua`,
-
-#### Auto pausing Video wallpaper
-
-Set video paths, vertical video is optional and it's used on vertical screens.
-
-```lua
--- Video wallpaper
-videowallpaper_path = HOME .. "/videos/video-wallpaper.mp4"
-videowallpaper_vertical_path = HOME .. "/videos/video-wallpaper-vertical.mp4"
-```
 
 #### Media controls with dominant colors
 
@@ -165,12 +152,6 @@ weather_api_key = "y0ur4p1k3yc0m35h3r3"
 |                  Tag preview                  |                 Client preview                  |
 | :-------------------------------------------: | :---------------------------------------------: |
 | ![tag_preview](./screenshots/tag_preview.png) | ![task_preview](./screenshots/task_preview.png) |
-
-#### Lockscreen with word clock colorized by time of day and widgets
-
-| Morning                                                     | Evening                                                     |
-| ----------------------------------------------------------- | ----------------------------------------------------------- |
-| ![lockscreen_morning](./screenshots/lockscreen_morning.png) | ![lockscreen_evening](./screenshots/lockscreen_evening.png) |
 
 #### Some popups
 

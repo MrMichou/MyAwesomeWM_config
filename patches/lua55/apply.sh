@@ -17,4 +17,3 @@ apply() { # <submodule path> <patch file>
 
 apply module/bling  bling.patch
 apply module/rubato rubato.patch
-apply away          away.patch

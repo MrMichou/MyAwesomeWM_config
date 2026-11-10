@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 local wibox = require("wibox")
 
-local json = require("away.third_party.dkjson")
+local json = require("module.dkjson")
 
 local variables = require("configuration.variables")
 local helpers = require("helpers")

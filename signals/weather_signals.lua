@@ -1,7 +1,7 @@
 local spawn = require("awful.spawn")
 local gtimer = require("gears.timer")
 
-local json = require("away.third_party.dkjson")
+local json = require("module.dkjson")
 
 local helpers = require("helpers")
 local variables = require("configuration.variables")
