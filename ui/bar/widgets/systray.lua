@@ -170,6 +170,14 @@ local function update_peek()
     shifter.shift = shift
     shifter:emit_signal("widget::layout_changed")
     peek.bg = current_bg()
+    -- Unfolded, the peek is drawn on the highlighted pill: round its ends so
+    -- they follow the pill's curve (the X shape also clips the tray icons).
+    -- Folded, its bg matches the bar, so keep it square to not clip the icon.
+    local rounded = progress > 0
+    if peek._rounded ~= rounded then
+        peek._rounded = rounded
+        peek.shape = rounded and helpers.rrect(icon_size / 2) or nil
+    end
     peek:geometry {
         x = bar.x + geo.x,
         y = bar.y + geo.y + math.floor((geo.height - icon_size) / 2),
