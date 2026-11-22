@@ -59,15 +59,22 @@ local function top_bar(s)
                     widget = wibox.container.margin
                 },
                 -- end
+                -- The media bar sits in the middle slot so it is the one that
+                -- shrinks when space runs out (e.g. systray unfolded),
+                -- instead of the clock wrapping onto two lines.
                 {
+                    nil,
                     mediabar(s.geometry.width, is_vertical),
-                    device_indicators,
-                    systray,
-                    battery(is_vertical),
-                    notifications_and_datetime(is_vertical),
-                    control_center_button,
+                    {
+                        device_indicators,
+                        systray,
+                        battery(is_vertical),
+                        notifications_and_datetime(is_vertical),
+                        control_center_button,
 
-                    layout = wibox.layout.fixed.horizontal
+                        layout = wibox.layout.fixed.horizontal
+                    },
+                    layout = wibox.layout.align.horizontal
                 }
             },
             margins = dpi(4),

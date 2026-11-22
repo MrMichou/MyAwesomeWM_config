@@ -1,5 +1,4 @@
 local spawn = require("awful.spawn")
-local notification = require("naughty.notification")
 
 local variables = require("configuration.variables")
 local playerctl = require("signals.playerctl")
@@ -8,10 +7,9 @@ local actual_colors
 
 local function extract_dominantcolors(stdout, stderr)
     if stderr ~= "" then
-        notification {
-            text = stderr,
-            urgency = "critical"
-        }
+        -- dominantcolors crashes on some album arts (e.g. tiny thumbnails with no
+        -- repeated color); keep the current colors and log instead of notifying.
+        io.stderr:write("dominantcolors failed: " .. (stderr:match("([^\n]+)%s*$") or stderr) .. "\n")
         return
     end
 
